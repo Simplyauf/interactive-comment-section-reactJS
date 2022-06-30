@@ -130,6 +130,10 @@
 	font-weight: 700;
 }
 
+.reply-btn:hover {
+	opacity: 0.5;
+}
+
 #reply-icon {
 	margin: 0.6em 0.4em 0 0;
 
@@ -153,6 +157,11 @@
 	cursor: pointer;
 	color: var(--clr-primary-2);
 }
+
+.delete-btn:hover {
+	opacity: 0.5;
+}
+
 #delete-icon,
 #edit-icon {
 	margin-right: 0.3em;
@@ -166,6 +175,10 @@
 	color: var(--clr-primary-1);
 	margin-left: 0.8em;
 	font-weight: 700;
+}
+
+.edit-btn:hover {
+	opacity: none;
 }
 
 .makeEdit-Delete-btn-unclickable {
@@ -198,6 +211,10 @@
 	background-color: var(--clr-primary-1);
 	color: var(--clr-white);
 	border-radius: 5px;
+}
+
+.send-reply-btn:hover {
+	opacity: 0.5;
 }
 
 /* comment  form box */
@@ -252,6 +269,9 @@ textarea {
 	border-color: transparent;
 	font-weight: 400;
 }
+.update-content-btn:hover {
+	opacity: 0.5;
+}
 
 .send-comment-btn {
 	cursor: pointer;
@@ -261,6 +281,9 @@ textarea {
 	border-radius: 5px;
 	border-color: transparent;
 	font-weight: 400;
+}
+.send-comment-btn:hover {
+	opacity: 0.5;
 }
 
 /* modal section */
