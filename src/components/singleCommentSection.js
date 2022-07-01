@@ -11,7 +11,7 @@ import { getPostedDate } from "./dateOfCommentPost";
 
 export const SingleCommentSection = (props) => {
 	//gETTING PARAMETERS OF THE USEREDUCER FROM COMMENTBOXES.JS
-	const { state, dispatch } = useContext(commentPageContext);
+	const { dispatch } = useContext(commentPageContext);
 
 	const { id, content, score, createdAt, user, replies } = props.commentData;
 
@@ -26,12 +26,17 @@ export const SingleCommentSection = (props) => {
 	};
 
 	const handleSendReplyClick = (e) => {
-		let replyFormValue = e.currentTarget.parentElement.previousSibling.value;
+		let replyFormValueTextarea = e.currentTarget.parentElement.previousElementSibling;
 
-		if (replyFormValue != 0) {
+		//PREVENTING ENTRIES OF MULTIPLE WHITESPACE AT THE BEGINNING OF INPUT
+		replyFormValueTextarea.addEventListener("input", () => {
+			replyFormValueTextarea.value = replyFormValueTextarea.value ? replyFormValueTextarea.value.trimStart() : "";
+		});
+
+		if (replyFormValueTextarea.value) {
 			let newReply = {
 				replyingTo: e.currentTarget.parentElement.parentElement.id,
-				content: replyFormValue,
+				content: replyFormValueTextarea.value,
 				score: 0,
 				timestamp: new Date(),
 				user: {
@@ -102,7 +107,6 @@ export const SingleCommentSection = (props) => {
 
 	const showModalWarningForDelete = (e) => {
 		e.currentTarget.parentElement.nextSibling.classList.add("activemodal");
-		console.log(e.currentTarget.parentElement.nextSibling);
 	};
 
 	const cancelModalWarning = (e) => {

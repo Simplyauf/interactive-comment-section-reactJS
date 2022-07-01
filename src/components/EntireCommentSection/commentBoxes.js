@@ -1,5 +1,5 @@
 import React from "react";
-import {  useReducer } from "react";
+import { useReducer } from "react";
 import { reducer } from "../reducer";
 import { data } from "../data";
 import { SingleCommentSection } from "../singleCommentSection";
@@ -33,11 +33,16 @@ const CommentPage = () => {
 
 	// ADD NEW COMMENTS
 	const sendNewComment = (e) => {
-		let newCommentContent = e.currentTarget.parentElement.previousSibling;
+		let newCommentContentTextarea = e.currentTarget.parentElement.previousElementSibling;
 
-		if (newCommentContent.value != 0) {
+		// PREVENT MULTI SPACE AT THE BEGINNING OF INPUT
+		newCommentContentTextarea.addEventListener("input", () => {
+			newCommentContentTextarea.value = newCommentContentTextarea.value ? newCommentContentTextarea.value.trimStart() : "";
+		});
+
+		if (newCommentContentTextarea.value) {
 			let newComment = {
-				content: newCommentContent.value,
+				content: newCommentContentTextarea.value,
 				score: 0,
 				createdAt: `recently `,
 				timestamp: new Date(),

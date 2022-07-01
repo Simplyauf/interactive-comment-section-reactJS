@@ -4,7 +4,7 @@ export const reducer = (state, action) => {
 	if (action.type === "ADD_NEW_REPLY") {
 		const { newReply, currentCommentSectionRef } = action.payload;
 		let currentObjOfTheCommentBeingInvoked = state.CommentDatas.filter((elem) => {
-			return elem.id == currentCommentSectionRef.current.dataset.id;
+			return elem.id === parseInt(currentCommentSectionRef.current.dataset.id);
 		});
 
 		newReply.id = currentObjOfTheCommentBeingInvoked[0].replies.length + 1;
@@ -17,11 +17,11 @@ export const reducer = (state, action) => {
 	if (action.type === "INCREASE-SCORE-VALUE") {
 		const { currentCommentSectionRef, checkIfSectionIsAReplyPage } = action.payload;
 		let currentObjOfTheCommentBeingInvoked = state.CommentDatas.filter((elem) => {
-			return elem.id == currentCommentSectionRef.current.dataset.id;
+			return elem.id === parseInt(currentCommentSectionRef.current.dataset.id);
 		});
 		if (checkIfSectionIsAReplyPage.classList.contains("reply-page")) {
 			let currentObjOfTheReplyBeingInvoked = currentObjOfTheCommentBeingInvoked[0].replies.find((elem) => {
-				return elem.id == checkIfSectionIsAReplyPage.dataset.id;
+				return elem.id === parseInt(checkIfSectionIsAReplyPage.dataset.id);
 			});
 
 			currentObjOfTheReplyBeingInvoked.score += 1;
@@ -35,7 +35,7 @@ export const reducer = (state, action) => {
 	if (action.type === "DECREASE-SCORE-VALUE") {
 		const { currentCommentSectionRef, checkIfSectionIsAReplyPage } = action.payload;
 		let currentObjOfTheCommentBeingInvoked = state.CommentDatas.filter((elem) => {
-			return elem.id == currentCommentSectionRef.current.dataset.id;
+			return elem.id === parseInt(currentCommentSectionRef.current.dataset.id);
 		});
 		if (checkIfSectionIsAReplyPage.classList.contains("reply-page")) {
 			let currentObjOfTheReplyBeingInvoked = currentObjOfTheCommentBeingInvoked[0].replies.find((elem) => {
@@ -60,7 +60,7 @@ export const reducer = (state, action) => {
 	if (action.type === "DELETE_A_COMMENT") {
 		const { currentCommentSectionRef, checkIfSectionIsAReplyPage } = action.payload;
 		let currentObjOfTheCommentBeingInvoked = state.CommentDatas.filter((elem) => {
-			return elem.id == currentCommentSectionRef.current.dataset.id;
+			return elem.id === parseInt(currentCommentSectionRef.current.dataset.id);
 		});
 		if (checkIfSectionIsAReplyPage.classList.contains("reply-page")) {
 			console.log(currentObjOfTheCommentBeingInvoked[0].replies);
@@ -83,12 +83,12 @@ export const reducer = (state, action) => {
 	if (action.type === "EDIT_A_COMMENT") {
 		const { currentCommentSectionRef, htmlTemplateForEdit, contentToBeEdited, checkIfSectionIsAReplyPage, updateEditedPost } = action.payload;
 		let currentObjOfTheCommentBeingInvoked = state.CommentDatas.filter((elem) => {
-			return elem.id == currentCommentSectionRef.current.dataset.id;
+			return elem.id === parseInt(currentCommentSectionRef.current.dataset.id);
 		});
 
 		if (checkIfSectionIsAReplyPage.classList.contains("reply-page")) {
 			let currentObjOfTheReplyBeingInvoked = currentObjOfTheCommentBeingInvoked[0].replies.find((elem) => {
-				return elem.id == checkIfSectionIsAReplyPage.dataset.id;
+				return elem.id === parseInt(checkIfSectionIsAReplyPage.dataset.id);
 			});
 
 			htmlTemplateForEdit.innerHTML = `
@@ -119,14 +119,14 @@ export const reducer = (state, action) => {
 		const { currentCommentSectionRef, ContentToBeUpdated, checkIfSectionIsAReplyPage, htmlElemToBeReplaced } = action.payload;
 		console.log(ContentToBeUpdated);
 		let currentObjOfTheCommentBeingInvoked = state.CommentDatas.filter((elem) => {
-			return elem.id == currentCommentSectionRef.current.dataset.id;
+			return elem.id === parseInt(currentCommentSectionRef.current.dataset.id);
 		});
 		let htmlTemplateForUpdate = document.createElement("div");
 		htmlTemplateForUpdate.setAttribute("class", "comment-text-container");
 
 		if (checkIfSectionIsAReplyPage.classList.contains("reply-page")) {
 			let currentObjOfTheReplyBeingInvoked = currentObjOfTheCommentBeingInvoked[0].replies.find((elem) => {
-				return elem.id == checkIfSectionIsAReplyPage.dataset.id;
+				return elem.id === parseInt(checkIfSectionIsAReplyPage.dataset.id);
 			});
 			console.log(currentObjOfTheReplyBeingInvoked);
 			currentObjOfTheReplyBeingInvoked.content = ContentToBeUpdated.replace(`@${currentObjOfTheReplyBeingInvoked.replyingTo},`, "");
