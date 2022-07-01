@@ -1,11 +1,11 @@
 <div align="center">
-<h1 align="center">Interactive-comment-section
+<h1 align="center">Interactive-comment-section </h1>
 <p align="center"> interactive-comment-section allows user to  Create, Read, Update, and Delete comments and replies
  Upvote and downvote comments
 </p>
 
-![Forks](https://img.shields.io/github/forks/junaidshaikh-js/clockwork)
-![Stars](https://img.shields.io/github/stars/junaidshaikh-js/clockwork)
+![Forks](https://img.shields.io/github/forks/Simplyauf/interactive-comment-section-reactJS)
+![Stars](https://img.shields.io/github/stars/Simplyauf/interactive-comment-section-reactJS)
 
 </div>
 
