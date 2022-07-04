@@ -16,22 +16,29 @@
 
 @media screen and (min-width: 600px) {
 	.app-container {
-		width: 80%;
+		width: 75%;
 	}
 }
 
 @media screen and (min-width: 900px) {
 	.app-container {
-		width: 84%;
+		width: 70%;
 	}
 }
 @media screen and (min-width: 1024px) {
 	.app-container {
-		width: 78%;
+		width: 76%;
 	}
 }
-@media screen and (min-width: 1400px) {
+
+@media screen and (min-width: 1200px) {
 	.app-container {
-		width: 74%;
+		width: 68%;
+	}
+}
+
+@media screen and (min-width: 1440px) {
+	.app-container {
+		width: 65%;
 	}
 }

@@ -93,7 +93,7 @@ export const reducer = (state, action) => {
 
 			htmlTemplateForEdit.innerHTML = `
 	   
-			<textarea class="edit-textarea" name="edit-area" id="" rows="7"  >@${currentObjOfTheReplyBeingInvoked.replyingTo}, ${currentObjOfTheReplyBeingInvoked.content} </textarea>
+			<textarea class="edit-textarea" name="edit-area"  rows="7"  >@${currentObjOfTheReplyBeingInvoked.replyingTo}, ${currentObjOfTheReplyBeingInvoked.content} </textarea>
 			<button class="update-content-btn" >UPDATE</button>
 		
 	`;
@@ -101,7 +101,7 @@ export const reducer = (state, action) => {
 		} else {
 			htmlTemplateForEdit.innerHTML = `
 	   
-			<textarea class="edit-textarea" name="edit-area" id="" rows="7"  > ${currentObjOfTheCommentBeingInvoked[0].content} </textarea>
+			<textarea class="edit-textarea" name="edit-area"  rows="7"  > ${currentObjOfTheCommentBeingInvoked[0].content} </textarea>
 			<button class="update-content-btn"  >UPDATE</button>
 		
 	`;
@@ -117,7 +117,7 @@ export const reducer = (state, action) => {
 
 	if (action.type === "UPDATE_EDITED_COMMENT") {
 		const { currentCommentSectionRef, ContentToBeUpdated, checkIfSectionIsAReplyPage, htmlElemToBeReplaced } = action.payload;
-		console.log(ContentToBeUpdated);
+
 		let currentObjOfTheCommentBeingInvoked = state.CommentDatas.filter((elem) => {
 			return elem.id === parseInt(currentCommentSectionRef.current.dataset.id);
 		});
@@ -128,24 +128,20 @@ export const reducer = (state, action) => {
 			let currentObjOfTheReplyBeingInvoked = currentObjOfTheCommentBeingInvoked[0].replies.find((elem) => {
 				return elem.id === parseInt(checkIfSectionIsAReplyPage.dataset.id);
 			});
-			console.log(currentObjOfTheReplyBeingInvoked);
-			currentObjOfTheReplyBeingInvoked.content = ContentToBeUpdated.replace(`@${currentObjOfTheReplyBeingInvoked.replyingTo},`, "");
-			console.log(currentObjOfTheReplyBeingInvoked);
-			console.log(ContentToBeUpdated);
 
-			htmlTemplateForUpdate.id = `${currentObjOfTheReplyBeingInvoked.user.username}`;
+			currentObjOfTheReplyBeingInvoked.content = ContentToBeUpdated.replace(`@${currentObjOfTheReplyBeingInvoked.replyingTo},`, "");
 
 			htmlTemplateForUpdate.innerHTML = `
 		
-			<p className="comment-text">
-				<b>		<a href='#${currentObjOfTheReplyBeingInvoked.replyingTo}'>@${currentObjOfTheReplyBeingInvoked.replyingTo}</a>
+			<p class="comment-text">
+				<b class="link-to-repliedUser">@${currentObjOfTheReplyBeingInvoked.replyingTo}
 						</b>
 			
 			${currentObjOfTheReplyBeingInvoked.content}</p>	   `;
 			htmlElemToBeReplaced.replaceWith(htmlTemplateForUpdate);
 		} else {
 			currentObjOfTheCommentBeingInvoked[0].content = ContentToBeUpdated;
-			htmlTemplateForUpdate.innerHTML = ` <p className="comment-text">${currentObjOfTheCommentBeingInvoked[0].content}</p>
+			htmlTemplateForUpdate.innerHTML = ` <p class="comment-text">${currentObjOfTheCommentBeingInvoked[0].content}</p>
 					   `;
 		}
 

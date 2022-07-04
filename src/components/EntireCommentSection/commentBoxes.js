@@ -1,5 +1,5 @@
 import React from "react";
-import { useReducer } from "react";
+import { useReducer, useEffect, useState } from "react";
 import { reducer } from "../reducer";
 import { data } from "../data";
 import { SingleCommentSection } from "../singleCommentSection";
@@ -13,18 +13,30 @@ const CommentPage = () => {
 		CommentDatas: data.comments,
 	};
 	const [state, dispatch] = useReducer(reducer, initialState);
+
+	// A dummy state to force rerender of time of post creation at the start the app since deep mutation of objects dont cause rerender but a state change does
+	const [commentTime, setCommentTime] = useState("");
+
 	const { currentUser } = data;
 
 	// updating date of the posts using the function from ../dateofcommentPost
-	for (let commentKeys of state.CommentDatas) {
-		let commentAndPostDate = commentKeys.timestamp;
-		setInterval(getPostedDate, 1000, commentAndPostDate, commentKeys);
 
-		for (let repliesKeys of commentKeys.replies) {
-			let commentAndPostDate = repliesKeys.timestamp;
-			setInterval(getPostedDate, 1000, commentAndPostDate, repliesKeys);
+	useEffect(() => {
+		for (let commentKeys of state.CommentDatas) {
+			let commentAndPostDate = commentKeys.timestamp;
+			setInterval(getPostedDate, 1000, commentAndPostDate, commentKeys);
+			getPostedDate(commentAndPostDate, commentKeys);
+
+			setCommentTime(commentAndPostDate);
+
+			for (let repliesKeys of commentKeys.replies) {
+				let commentAndPostDate = repliesKeys.timestamp;
+				setInterval(getPostedDate, 1000, commentAndPostDate, repliesKeys);
+
+				setCommentTime(commentAndPostDate);
+			}
 		}
-	}
+	}, [state.CommentDatas]);
 
 	// SORTING THE COMMENTS BY SCORE
 	state.CommentDatas.sort((x, y) => {

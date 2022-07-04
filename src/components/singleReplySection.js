@@ -1,18 +1,30 @@
 import React from "react";
 import { data } from "./data";
 import "./EntireCommentSection/commentBoxes.css";
-
 import { ReplyForm } from "./commentAndReply";
 
 export const SingleReplySection = (props) => {
 	const { id, content, replyingTo, createdAt, score, user } = props.currentRepliesData;
 	const { handleSendReplyClick, handlePlusIcon, handleMinusIcon, ConfirmdeleteComment, cancelModalWarning } = props;
 	const { username, image } = user;
-	let linkToThePersonBeingRepliedTo = `#${replyingTo}`;
 
+	//SCROLLING TO REPLIED USERS BOX WHEN HIS TAG IS CLICKED
+	const scrollToRepliedUser = (e) => {
+		// getting the replied users name from the comment box classnames
+		const usersHtmlElemClassName = document.querySelectorAll(".comment-box");
+
+		//getting the users name from the link to be clicked
+		let usersUsername = e.currentTarget.textContent.substring(1);
+
+		usersHtmlElemClassName.forEach((userHtmlElemClassName) => {
+			if (userHtmlElemClassName.classList.contains(usersUsername)) {
+				userHtmlElemClassName.scrollIntoView(true);
+			}
+		});
+	};
 	return (
 		<article>
-			<div className="comment-box reply-page" id={username} data-id={id}>
+			<div className={`${username} comment-box reply-page`} aria-roledescription="reply-box" data-id={id}>
 				<div className="user-info">
 					<img src={image.png} alt="" className="user-img" />
 
@@ -24,17 +36,17 @@ export const SingleReplySection = (props) => {
 					)}
 					<span className="time">{createdAt}</span>
 				</div>
-				<div className="comment-text-container" id={username}>
+				<div className="comment-text-container">
 					<p className="comment-text">
-						<b>
-							<a href={linkToThePersonBeingRepliedTo}>@{replyingTo}</a>
+						<b className="link-to-repliedUser" onClick={scrollToRepliedUser}>
+							@{replyingTo}
 						</b>
 						&nbsp; &nbsp;
 						{content}
 					</p>
 				</div>
 
-				<button className="score-btn" id={username}>
+				<button className="score-btn">
 					<img src="images/icon-plus.svg" alt="+" onClick={handlePlusIcon} className="plus-icon" />
 					<span className="score-value">{score}</span>
 
@@ -43,7 +55,7 @@ export const SingleReplySection = (props) => {
 
 				{props.children}
 
-				<div className="modal-container" id={username} data-id={id}>
+				<div className="modal-container" data-id={id} role="alert">
 					<div className="modal-content">
 						<h3 className="modal-header">Delete comment</h3>
 

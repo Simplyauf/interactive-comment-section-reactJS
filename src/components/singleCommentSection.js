@@ -48,6 +48,7 @@ export const SingleCommentSection = (props) => {
 				},
 				createdAt: "recently",
 			};
+
 			let commentAndPostDate = newReply.timestamp;
 			setInterval(getPostedDate, 1000, commentAndPostDate, newReply);
 
@@ -124,8 +125,8 @@ export const SingleCommentSection = (props) => {
 	};
 
 	return (
-		<article>
-			<div className="comment-box comment-page" id={username} data-id={id} ref={currentCommentSectionRef}>
+		<article aria-roledescription="comment-box">
+			<div className={`${username} comment-box comment-page`} data-id={id} ref={currentCommentSectionRef}>
 				<div className="user-info">
 					<img src={image.png} alt="" className="user-img" />
 
@@ -141,7 +142,7 @@ export const SingleCommentSection = (props) => {
 					<p className="comment-text">{content}</p>
 				</div>
 
-				<button className="score-btn" id={id}>
+				<button className="score-btn">
 					<img onClick={handlePlusIcon} src="images/icon-plus.svg" alt="+" className="plus-icon" />
 					<span className="score-value">{score}</span>
 
@@ -149,7 +150,7 @@ export const SingleCommentSection = (props) => {
 				</button>
 				{username === data.currentUser.username ? <ModifyBtns id={id} {...{ editComment, showModalWarningForDelete }} /> : <ReplyBtn handleReplyBtnClick={handleReplyBtnClick} />}
 
-				<div className="modal-container " id={id}>
+				<div className="modal-container ">
 					<div className="modal-content">
 						<h3 className="modal-header">Delete comment</h3>
 
