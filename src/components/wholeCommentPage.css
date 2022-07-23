@@ -34,7 +34,8 @@
 	width: 100%;
 	margin: 0.8em 0 0em 0;
 	padding-left: 0.7em;
-	border-left: 0.7px solid var(--clr-neutral-1);
+	border-left: 1.2px solid hsla(211, 10%, 45%, 0.5);
+
 	font-size: 1em;
 	flex-direction: column;
 	display: flex;
@@ -99,7 +100,7 @@
 	position: relative;
 	border: transparent;
 	font-size: 1em;
-	background-color: var(--clr-neutral-2);
+	background-color: var(--clr-neutral-3);
 	border-radius: 6px;
 	color: var(--clr-primary-1);
 	font-weight: 700;
@@ -130,7 +131,7 @@
 .reply-btn {
 	justify-self: flex-end;
 	cursor: pointer;
-	margin: -0.2em 1.5em 0 0;
+	margin: -0.2em 1em 0 0;
 	font-size: 1.1em;
 	color: var(--clr-primary-1);
 	font-weight: 700;
@@ -148,8 +149,7 @@
 
 .modify-btns {
 	justify-self: flex-end;
-	margin-right: 1.5em;
-
+	margin-right: 1em;
 	display: flex;
 	align-items: center;
 	margin-top: 0.4em;
@@ -158,8 +158,8 @@
 }
 
 .delete-btn {
-	display: inline-flex;
-	align-items: center;
+	display: flex;
+
 	cursor: pointer;
 	color: var(--clr-primary-2);
 }
@@ -170,12 +170,13 @@
 
 .delete-icon,
 .edit-icon {
+	height: 13.5px;
+	align-self: center;
 	margin-right: 0.3em;
-	height: 14px;
 }
 
 .edit-btn {
-	display: inline-flex;
+	display: flex;
 	align-items: center;
 	cursor: pointer;
 	color: var(--clr-primary-1);
@@ -196,27 +197,32 @@
 
 .input-reply-box {
 	display: none;
+	justify-content: space-between;
 	width: 100%;
 	height: auto;
+	grid-gap: 1.2em;
+	grid-template-columns: 1fr 1fr;
 	background: var(--clr-white);
 	border-radius: 5px;
-	padding: 1em;
+	padding: 1.4em;
 	margin-top: 0.8em;
 }
 
 .active-reply-form {
-	display: block;
+	display: grid;
 }
 
 .send-reply-btn {
 	cursor: pointer;
 	font-weight: 400;
-	width: 25%;
+	width: 50%;
+
 	outline: 0;
 	border-color: transparent;
 	background-color: var(--clr-primary-1);
 	color: var(--clr-white);
 	border-radius: 5px;
+	justify-self: flex-end;
 }
 
 .send-reply-btn:hover {
@@ -226,23 +232,28 @@
 /* comment  form box */
 
 .input-comment-box {
+	display: grid;
+	grid-gap: 1.2em;
+	grid-template-columns: 1fr 1fr;
 	width: 100%;
 	height: auto;
 	background: var(--clr-white);
 	margin-bottom: 0.8em;
+
 	border-radius: 5px;
-	padding: 1em;
+	padding: 1.4em;
 }
 
 textarea {
 	width: 98%;
+	grid-column: 1/3;
 	height: auto;
 	resize: none;
 	padding: 1em;
-	border: 1px solid var(--clr-neutral-1);
+	border: 1.2px solid hsla(211, 10%, 45%, 0.5);
 	outline: none;
 	margin-left: 0.2em;
-	border-radius: 3%;
+	border-radius: 5%;
 	font-weight: 400;
 	font-size: 15px;
 	letter-spacing: 120%;
@@ -250,10 +261,8 @@ textarea {
 	color: hsl(211, 10%, 45%);
 }
 
-.img-send-container {
-	display: flex;
-	justify-content: space-between;
-	margin-top: 0.8em;
+textarea:focus {
+	border: 1.2px solid var(--clr-neutral-1);
 }
 
 .user-img-container-comment {
@@ -281,12 +290,14 @@ textarea {
 
 .send-comment-btn {
 	cursor: pointer;
-	width: 25%;
+
+	width: 50%;
 	background-color: var(--clr-primary-1);
 	color: var(--clr-white);
 	border-radius: 5px;
 	border-color: transparent;
 	font-weight: 400;
+	justify-self: flex-end;
 }
 .send-comment-btn:hover {
 	opacity: 0.5;
@@ -392,6 +403,12 @@ textarea {
 		top: 35%;
 		left: 25%;
 	}
+	.score-btn {
+		width: 43%;
+	}
+	.modify-btns {
+		gap: 4px;
+	}
 }
 
 @media screen and (min-width: 1024px) {
@@ -399,6 +416,7 @@ textarea {
 		grid-template-columns: 60px 4fr 1fr;
 		grid-template-rows: 50px auto;
 		place-items: start;
+		gap: 0.6em;
 	}
 	.comment-text-container {
 		width: 100%;
@@ -437,7 +455,7 @@ textarea {
 	.modify-btns {
 		align-self: center;
 		justify-self: flex-end;
-		display: inline-flex;
+		display: flex;
 		order: 4;
 		grid-column: 3;
 		align-items: center;
@@ -461,5 +479,55 @@ textarea {
 		right: 14px;
 		margin-right: 0.2em;
 		fill: var(--clr-neutral-1);
+	}
+
+	.input-reply-box {
+		display: grid;
+		grid-gap: 1.4em;
+		grid-template-rows: 1fr;
+		grid-template-columns: 50px 1fr 1fr 1fr 1fr minmax(70px, 90px);
+		border-radius: 8px;
+		padding: 1.5em;
+	}
+	.send-reply-btn {
+		width: 90px;
+		margin: 0 1em 0 1.8em;
+		grid-column: 6/6;
+		order: 3;
+		height: 3em;
+		cursor: pointer;
+		width: 100%;
+	}
+	.user-img-container-comment {
+		order: 1;
+		grid-column: 1/1;
+		cursor: pointer;
+		width: 40px;
+		height: 40px;
+		margin-top: 0em;
+	}
+
+	.input-comment-box {
+		display: grid;
+		grid-gap: 1.4em;
+		grid-template-rows: 1fr;
+		grid-template-columns: 50px 1fr 1fr 1fr 1fr minmax(70px, 90px);
+		border-radius: 8px;
+		padding: 1.5em;
+	}
+	.send-comment-btn {
+		width: 90px;
+		grid-column: 6/6;
+		margin: 0 1em 0 1.8em;
+		order: 3;
+		height: 3em;
+		cursor: pointer;
+		width: 100%;
+	}
+	textarea {
+		grid-column: 2/6;
+		grid-row: 1/2;
+		order: 2;
+		margin-right: 8px;
 	}
 }

@@ -1,5 +1,5 @@
 import "./App.css";
-import CommentPage from "./components/EntireCommentSection/commentBoxes";
+import CommentPage from "./components/wholeCommentPage";
 
 import React from "react";
 

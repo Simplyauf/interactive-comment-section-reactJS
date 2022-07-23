@@ -1,10 +1,10 @@
 import React from "react";
 import { useReducer, useEffect, useState } from "react";
-import { reducer } from "../reducer";
-import { data } from "../data";
-import { SingleCommentSection } from "../singleCommentSection";
-import { CommentForm } from "../commentAndReply";
-import { getPostedDate } from "../dateOfCommentPost";
+import { reducer } from "./reducer";
+import { data } from "./data";
+import { SingleCommentSection } from "./singleCommentSection";
+import { CommentForm } from "./commentAndReplyForm";
+import { getPostedDate } from "./dateOfCommentPost";
 
 export const commentPageContext = React.createContext();
 
@@ -18,25 +18,28 @@ const CommentPage = () => {
 	const [commentTime, setCommentTime] = useState("");
 
 	const { currentUser } = data;
+	const { CommentDatas } = state;
 
-	// updating date of the posts using the function from ../dateofcommentPost
-
-	useEffect(() => {
-		for (let commentKeys of state.CommentDatas) {
+	// updating date of the posts onLaunch using the function from ../dateofcommentPost
+	async function updateTimeStampsOfPosts(CommentDatas) {
+		for (let commentKeys of CommentDatas) {
 			let commentAndPostDate = commentKeys.timestamp;
 			setInterval(getPostedDate, 1000, commentAndPostDate, commentKeys);
-			getPostedDate(commentAndPostDate, commentKeys);
-
-			setCommentTime(commentAndPostDate);
+			await getPostedDate(commentAndPostDate, commentKeys);
 
 			for (let repliesKeys of commentKeys.replies) {
 				let commentAndPostDate = repliesKeys.timestamp;
 				setInterval(getPostedDate, 1000, commentAndPostDate, repliesKeys);
-
+				await getPostedDate(commentAndPostDate, repliesKeys);
 				setCommentTime(commentAndPostDate);
 			}
 		}
-	}, [state.CommentDatas]);
+	}
+
+	console.log(CommentDatas);
+	useEffect(() => {
+		updateTimeStampsOfPosts(CommentDatas);
+	}, [CommentDatas]);
 
 	// SORTING THE COMMENTS BY SCORE
 	state.CommentDatas.sort((x, y) => {
@@ -45,7 +48,7 @@ const CommentPage = () => {
 
 	// ADD NEW COMMENTS
 	const sendNewComment = (e) => {
-		let newCommentContentTextarea = e.currentTarget.parentElement.previousElementSibling;
+		let newCommentContentTextarea = e.currentTarget.parentElement.firstElementChild;
 
 		// PREVENT MULTI SPACE AT THE BEGINNING OF INPUT
 		newCommentContentTextarea.addEventListener("input", () => {

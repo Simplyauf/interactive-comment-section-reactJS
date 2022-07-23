@@ -33,12 +33,12 @@
 
 @media screen and (min-width: 1200px) {
 	.app-container {
-		width: 68%;
+		width: 67%;
 	}
 }
 
-@media screen and (min-width: 1440px) {
+@media screen and (min-width: 1400px) {
 	.app-container {
-		width: 65%;
+		width: 60%;
 	}
 }

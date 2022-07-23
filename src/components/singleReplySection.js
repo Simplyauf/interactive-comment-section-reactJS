@@ -1,7 +1,7 @@
 import React from "react";
 import { data } from "./data";
-import "./EntireCommentSection/commentBoxes.css";
-import { ReplyForm } from "./commentAndReply";
+import "./wholeCommentPage.css";
+import { ReplyForm } from "./commentAndReplyForm";
 
 export const SingleReplySection = (props) => {
 	const { id, content, replyingTo, createdAt, score, user } = props.currentRepliesData;

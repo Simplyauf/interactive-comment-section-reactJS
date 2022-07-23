@@ -1,7 +1,7 @@
 import React from "react";
 
 import { data } from "./data";
-import "./EntireCommentSection/commentBoxes.css";
+import "./wholeCommentPage.css";
 
 export const ReplyForm = (props) => {
 	const { currentUser } = data;
@@ -12,15 +12,13 @@ export const ReplyForm = (props) => {
 		<div className="input-reply-box" id={username}>
 			<textarea name="" rows="7" placeholder="Add a comment..."></textarea>
 
-			<div className="img-send-container">
-				<div className="user-img-container-comment">
-					<img src={currentUser.image.png} alt="" className="user-img" />
-				</div>
-
-				<button className="send-reply-btn" onClick={handleSendReplyClick}>
-					REPLY
-				</button>
+			<div className="user-img-container-comment">
+				<img src={currentUser.image.png} alt="" className="user-img" />
 			</div>
+
+			<button className="send-reply-btn" onClick={handleSendReplyClick}>
+				REPLY
+			</button>
 		</div>
 	);
 };
@@ -33,15 +31,13 @@ export const CommentForm = (props) => {
 		<div className="input-comment-box">
 			<textarea className="send-textarea" name="" rows="7" placeholder="Add a comment..."></textarea>
 
-			<div className="img-send-container">
-				<div className="user-img-container-comment">
-					<img src={currentUser.image.png} alt="" className="user-img" />
-				</div>
-
-				<button className="send-comment-btn" onClick={sendNewComment}>
-					SEND
-				</button>
+			<div className="user-img-container-comment">
+				<img src={currentUser.image.png} alt="" className="user-img" />
 			</div>
+
+			<button className="send-comment-btn" onClick={sendNewComment}>
+				SEND
+			</button>
 		</div>
 	);
 };

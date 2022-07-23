@@ -1,7 +1,7 @@
-import { ReplyForm } from "./commentAndReply";
+import { ReplyForm } from "./commentAndReplyForm";
 import { useContext, useRef } from "react";
-import { commentPageContext } from "./EntireCommentSection/commentBoxes";
-import "./EntireCommentSection/commentBoxes.css";
+import { commentPageContext } from "./wholeCommentPage";
+import "./wholeCommentPage.css";
 import { SingleReplySection } from "./singleReplySection";
 
 import { data } from "./data";
@@ -26,7 +26,7 @@ export const SingleCommentSection = (props) => {
 	};
 
 	const handleSendReplyClick = (e) => {
-		let replyFormValueTextarea = e.currentTarget.parentElement.previousElementSibling;
+		let replyFormValueTextarea = e.currentTarget.parentElement.firstElementChild;
 
 		//PREVENTING ENTRIES OF MULTIPLE WHITESPACE AT THE BEGINNING OF INPUT
 		replyFormValueTextarea.addEventListener("input", () => {
@@ -35,7 +35,7 @@ export const SingleCommentSection = (props) => {
 
 		if (replyFormValueTextarea.value) {
 			let newReply = {
-				replyingTo: e.currentTarget.parentElement.parentElement.id,
+				replyingTo: e.currentTarget.parentElement.id,
 				content: replyFormValueTextarea.value,
 				score: 0,
 				timestamp: new Date(),
@@ -58,7 +58,7 @@ export const SingleCommentSection = (props) => {
 			};
 			dispatch(action);
 
-			e.currentTarget.parentElement.parentElement.classList.remove("active-reply-form");
+			e.currentTarget.parentElement.classList.remove("active-reply-form");
 		} else {
 			alert("pls type in value");
 		}
