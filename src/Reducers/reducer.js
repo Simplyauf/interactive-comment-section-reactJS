@@ -2,9 +2,9 @@ export const reducer = (state, action) => {
 	const { CommentDatas } = state;
 
 	if (action.type === "ADD_NEW_REPLY") {
-		const { newReply, currentCommentSectionRef } = action.payload;
+		const { newReply, selectedCommentSectionRef } = action.payload;
 		let currentObjOfTheCommentBeingInvoked = state.CommentDatas.filter((elem) => {
-			return elem.id === parseInt(currentCommentSectionRef.current.dataset.id);
+			return elem.id === parseInt(selectedCommentSectionRef.current.dataset.id);
 		});
 
 		newReply.id = currentObjOfTheCommentBeingInvoked[0].replies.length + 1;
@@ -15,9 +15,9 @@ export const reducer = (state, action) => {
 	}
 
 	if (action.type === "INCREASE-SCORE-VALUE") {
-		const { currentCommentSectionRef, checkIfSectionIsAReplyPage } = action.payload;
+		const { selectedCommentSectionRef, checkIfSectionIsAReplyPage } = action.payload;
 		let currentObjOfTheCommentBeingInvoked = state.CommentDatas.filter((elem) => {
-			return elem.id === parseInt(currentCommentSectionRef.current.dataset.id);
+			return elem.id === parseInt(selectedCommentSectionRef.current.dataset.id);
 		});
 		if (checkIfSectionIsAReplyPage.classList.contains("reply-page")) {
 			let currentObjOfTheReplyBeingInvoked = currentObjOfTheCommentBeingInvoked[0].replies.find((elem) => {
@@ -33,9 +33,9 @@ export const reducer = (state, action) => {
 	}
 
 	if (action.type === "DECREASE-SCORE-VALUE") {
-		const { currentCommentSectionRef, checkIfSectionIsAReplyPage } = action.payload;
+		const { selectedCommentSectionRef, checkIfSectionIsAReplyPage } = action.payload;
 		let currentObjOfTheCommentBeingInvoked = state.CommentDatas.filter((elem) => {
-			return elem.id === parseInt(currentCommentSectionRef.current.dataset.id);
+			return elem.id === parseInt(selectedCommentSectionRef.current.dataset.id);
 		});
 		if (checkIfSectionIsAReplyPage.classList.contains("reply-page")) {
 			let currentObjOfTheReplyBeingInvoked = currentObjOfTheCommentBeingInvoked[0].replies.find((elem) => {
@@ -58,21 +58,18 @@ export const reducer = (state, action) => {
 	}
 
 	if (action.type === "DELETE_A_COMMENT") {
-		const { currentCommentSectionRef, checkIfSectionIsAReplyPage } = action.payload;
+		const { selectedCommentSectionRef, checkIfSectionIsAReplyPage } = action.payload;
 		let currentObjOfTheCommentBeingInvoked = state.CommentDatas.filter((elem) => {
-			return elem.id === parseInt(currentCommentSectionRef.current.dataset.id);
+			return elem.id === parseInt(selectedCommentSectionRef.current.dataset.id);
 		});
 		if (checkIfSectionIsAReplyPage.classList.contains("reply-page")) {
-			console.log(currentObjOfTheCommentBeingInvoked[0].replies);
 			let newReplies = currentObjOfTheCommentBeingInvoked[0].replies.filter((elem) => {
-				console.log(typeof checkIfSectionIsAReplyPage.dataset.id, typeof elem.id);
 				return elem.id !== parseInt(checkIfSectionIsAReplyPage.dataset.id);
 			});
-			console.log(newReplies);
 			currentObjOfTheCommentBeingInvoked[0].replies = [...newReplies];
 		} else {
 			let newComments = state.CommentDatas.filter((elem) => {
-				return elem.id !== parseInt(currentCommentSectionRef.current.dataset.id);
+				return elem.id !== parseInt(selectedCommentSectionRef.current.dataset.id);
 			});
 			state.CommentDatas = [...newComments];
 		}
@@ -81,9 +78,9 @@ export const reducer = (state, action) => {
 	}
 
 	if (action.type === "EDIT_A_COMMENT") {
-		const { currentCommentSectionRef, htmlTemplateForEdit, contentToBeEdited, checkIfSectionIsAReplyPage, updateEditedPost } = action.payload;
+		const { selectedCommentSectionRef, dispatch, htmlTemplateForEdit, contentToBeEdited, checkIfSectionIsAReplyPage, updateEditedPost } = action.payload;
 		let currentObjOfTheCommentBeingInvoked = state.CommentDatas.filter((elem) => {
-			return elem.id === parseInt(currentCommentSectionRef.current.dataset.id);
+			return elem.id === parseInt(selectedCommentSectionRef.current.dataset.id);
 		});
 
 		if (checkIfSectionIsAReplyPage.classList.contains("reply-page")) {
@@ -109,17 +106,17 @@ export const reducer = (state, action) => {
 		}
 
 		htmlTemplateForEdit.lastElementChild.addEventListener("click", (e) => {
-			updateEditedPost(e);
+			updateEditedPost(e, dispatch, selectedCommentSectionRef);
 		});
 
 		return { ...state };
 	}
 
 	if (action.type === "UPDATE_EDITED_COMMENT") {
-		const { currentCommentSectionRef, ContentToBeUpdated, checkIfSectionIsAReplyPage, htmlElemToBeReplaced } = action.payload;
+		const { selectedCommentSectionRef, ContentToBeUpdated, checkIfSectionIsAReplyPage, htmlElemToBeReplaced } = action.payload;
 
 		let currentObjOfTheCommentBeingInvoked = state.CommentDatas.filter((elem) => {
-			return elem.id === parseInt(currentCommentSectionRef.current.dataset.id);
+			return elem.id === parseInt(selectedCommentSectionRef.current.dataset.id);
 		});
 		let htmlTemplateForUpdate = document.createElement("div");
 		htmlTemplateForUpdate.setAttribute("class", "comment-text-container");

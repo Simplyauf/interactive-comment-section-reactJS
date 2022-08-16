@@ -1,10 +1,10 @@
 import React from "react";
 import { useReducer, useEffect, useState } from "react";
-import { reducer } from "./reducer";
-import { data } from "./data";
+import { reducer } from "../Reducers/reducer";
+import { data } from "../jsonDatas/data";
 import { SingleCommentSection } from "./singleCommentSection";
 import { CommentForm } from "./commentAndReplyForm";
-import { getPostedDate } from "./dateOfCommentPost";
+import { getPostedDate } from "../utils/dateOfCommentPost";
 
 export const commentPageContext = React.createContext();
 
@@ -17,7 +17,6 @@ const CommentPage = () => {
 	// A dummy state to force rerender of time of post creation at the start the app since deep mutation of objects dont cause rerender but a state change does
 	const [commentTime, setCommentTime] = useState("");
 
-	const { currentUser } = data;
 	const { CommentDatas } = state;
 
 	// updating date of the posts onLaunch using the function from ../dateofcommentPost
@@ -36,7 +35,6 @@ const CommentPage = () => {
 		}
 	}
 
-	console.log(CommentDatas);
 	useEffect(() => {
 		updateTimeStampsOfPosts(CommentDatas);
 	}, [CommentDatas]);
@@ -47,44 +45,13 @@ const CommentPage = () => {
 	});
 
 	// ADD NEW COMMENTS
-	const sendNewComment = (e) => {
-		let newCommentContentTextarea = e.currentTarget.parentElement.firstElementChild;
-
-		// PREVENT MULTI SPACE AT THE BEGINNING OF INPUT
-		newCommentContentTextarea.addEventListener("input", () => {
-			newCommentContentTextarea.value = newCommentContentTextarea.value ? newCommentContentTextarea.value.trimStart() : "";
-		});
-
-		if (newCommentContentTextarea.value) {
-			let newComment = {
-				content: newCommentContentTextarea.value,
-				score: 0,
-				createdAt: `recently `,
-				timestamp: new Date(),
-				user: {
-					image: {
-						png: currentUser.image.png,
-						webp: currentUser.image.webp,
-					},
-					username: currentUser.username,
-				},
-				replies: [],
-			};
-			let commentAndPostDate = newComment.timestamp;
-			setInterval(getPostedDate, 1000, commentAndPostDate, newComment);
-
-			dispatch({ type: "ADD_NEW_COMMENT", payload: { newComment } });
-		} else {
-			alert("Comments cant be empty");
-		}
-	};
 
 	return (
 		<commentPageContext.Provider value={{ state, dispatch }}>
 			{state.CommentDatas.map((commentData) => {
 				return <SingleCommentSection key={commentData.id} commentData={commentData} />;
 			})}
-			<CommentForm sendNewComment={sendNewComment} />
+			<CommentForm />
 		</commentPageContext.Provider>
 	);
 };

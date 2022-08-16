@@ -1,14 +1,24 @@
 import React from "react";
-import { data } from "./data";
+import { data } from "../jsonDatas/data";
+import { useContext } from "react";
 import "./wholeCommentPage.css";
 import { ReplyForm } from "./commentAndReplyForm";
+import { commentPageContext } from "./wholeCommentPage";
+
+import { handlePlusIcon } from "../utils/handlePlusIcon";
+import { handleMinusIcon } from "../utils/handleMinusIcon";
+import { cancelModalWarning } from "../utils/modalFn";
+import { ConfirmdeleteComment } from "../utils/modalFn";
 
 export const SingleReplySection = (props) => {
+	const { dispatch } = useContext(commentPageContext);
+
 	const { id, content, replyingTo, createdAt, score, user } = props.currentRepliesData;
-	const { handleSendReplyClick, handlePlusIcon, handleMinusIcon, ConfirmdeleteComment, cancelModalWarning } = props;
+	const { selectedCommentSectionRef } = props;
+
 	const { username, image } = user;
 
-	//SCROLLING TO REPLIED USERS BOX WHEN HIS TAG IS CLICKED
+	//SCROLLING TO REPLIED USERS BOX WHEN HIS/HER TAG IS CLICKED
 	const scrollToRepliedUser = (e) => {
 		// getting the replied users name from the comment box classnames
 		const usersHtmlElemClassName = document.querySelectorAll(".comment-box");
@@ -47,10 +57,10 @@ export const SingleReplySection = (props) => {
 				</div>
 
 				<button className="score-btn">
-					<img src="images/icon-plus.svg" alt="+" onClick={handlePlusIcon} className="plus-icon" />
+					<img src="images/icon-plus.svg" alt="+" onClick={(e) => handlePlusIcon(e, dispatch, selectedCommentSectionRef)} className="plus-icon" />
 					<span className="score-value">{score}</span>
 
-					<img onClick={handleMinusIcon} src="images/icon-minus.svg" alt="-" className="minus-icon" />
+					<img onClick={(e) => handleMinusIcon(e, dispatch, selectedCommentSectionRef)} src="images/icon-minus.svg" alt="-" className="minus-icon" />
 				</button>
 
 				{props.children}
@@ -65,14 +75,14 @@ export const SingleReplySection = (props) => {
 								NO,CANCEL
 							</button>
 
-							<button className="Delete-modal-btn" onClick={ConfirmdeleteComment}>
+							<button className="Delete-modal-btn" onClick={(e) => ConfirmdeleteComment(e, dispatch, selectedCommentSectionRef)}>
 								YES,DELETE
 							</button>
 						</div>
 					</div>
 				</div>
 			</div>
-			<ReplyForm username={username} handleSendReplyClick={handleSendReplyClick} />
+			<ReplyForm username={username} {...{ selectedCommentSectionRef }} />
 		</article>
 	);
 };

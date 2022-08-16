@@ -1,13 +1,19 @@
 import React from "react";
-
-import { data } from "./data";
 import "./wholeCommentPage.css";
+import { data } from "../jsonDatas/data";
+import { useContext } from "react";
+import { commentPageContext } from "./wholeCommentPage";
+
+import { handleSendReplyClick } from "../utils/handleSendReplyClick";
+import { sendNewCommentFn } from "../utils/SendNewComment";
 
 export const ReplyForm = (props) => {
+	const { dispatch } = useContext(commentPageContext);
+
 	const { currentUser } = data;
 	const { username } = props;
 
-	const { handleSendReplyClick } = props;
+	const { selectedCommentSectionRef } = props;
 	return (
 		<div className="input-reply-box" id={username}>
 			<textarea name="" rows="7" placeholder="Add a comment..."></textarea>
@@ -16,7 +22,7 @@ export const ReplyForm = (props) => {
 				<img src={currentUser.image.png} alt="" className="user-img" />
 			</div>
 
-			<button className="send-reply-btn" onClick={handleSendReplyClick}>
+			<button className="send-reply-btn" onClick={(e) => handleSendReplyClick(e, dispatch, selectedCommentSectionRef)}>
 				REPLY
 			</button>
 		</div>
@@ -24,8 +30,9 @@ export const ReplyForm = (props) => {
 };
 
 export const CommentForm = (props) => {
+	const { dispatch } = useContext(commentPageContext);
+
 	const { currentUser } = data;
-	const { sendNewComment } = props;
 
 	return (
 		<div className="input-comment-box">
@@ -35,16 +42,9 @@ export const CommentForm = (props) => {
 				<img src={currentUser.image.png} alt="" className="user-img" />
 			</div>
 
-			<button className="send-comment-btn" onClick={sendNewComment}>
+			<button className="send-comment-btn" onClick={(e) => sendNewCommentFn(e, dispatch)}>
 				SEND
 			</button>
 		</div>
 	);
 };
-
-// export const htmlTemplateForEdit = (props) => {
-// 	const { content } = props;
-// 	return (
-
-// 	);
-// };

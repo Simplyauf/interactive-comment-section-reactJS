@@ -482,12 +482,15 @@ textarea:focus {
 	}
 
 	.input-reply-box {
-		display: grid;
+		display: none;
 		grid-gap: 1.4em;
 		grid-template-rows: 1fr;
 		grid-template-columns: 50px 1fr 1fr 1fr 1fr minmax(70px, 90px);
 		border-radius: 8px;
 		padding: 1.5em;
+	}
+	.active-reply-form {
+		display: grid;
 	}
 	.send-reply-btn {
 		width: 90px;
