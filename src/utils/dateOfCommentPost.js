@@ -4,6 +4,7 @@ export function getPostedDate(dateOfPost, newReply = {}) {
 	let currentDate = new Date();
 	const timeDifference = currentDate.getTime() - dateOfPost.getTime();
 
+	const oneYear=12 * 30 * 24 * 60 * 60 * 1000;
 	const onemonth = 30 * 24 * 60 * 60 * 1000;
 	const oneweek = 7 * 24 * 60 * 60 * 1000;
 	const oneDay = 24 * 60 * 60 * 1000;
@@ -11,6 +12,7 @@ export function getPostedDate(dateOfPost, newReply = {}) {
 	const onemin = 60 * 1000;
 	const oneSec = 1000;
 
+	let year=Math.floor(timeDifference/oneYear)
 	let month = Math.floor(timeDifference / onemonth);
 	let week = Math.floor(timeDifference / oneweek);
 	let day = Math.floor(timeDifference / oneDay);
@@ -34,8 +36,10 @@ export function getPostedDate(dateOfPost, newReply = {}) {
 		week <= 1 ? (datePosted = `${week} week`) : (datePosted = `${week} weeks`);
 	} else if (day > 30 && month <= 12) {
 		month <= 1 ? (datePosted = `${month} month`) : (datePosted = `${month} months`);
+	} else if (month>12 && year>=1) {
+		year <= 1 ? (datePosted = `${year} year`) : (datePosted = `${year} years`);
 	} else {
-		console.log("no");
+		return ;
 	}
 
 	newReply.createdAt = `${datePosted} ago`;
